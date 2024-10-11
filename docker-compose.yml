@@ -4,9 +4,9 @@ services:
     container_name: mongodb_container
     ports:
       - "27017:27017"
-    command: mongod --noauth 
+    command: mongod --noauth
     volumes:
-      - mongodb_data:/data/db
+      - microtaller2_mongodb_data:/data/db  
     networks:
       - microtaller_network
 
@@ -37,7 +37,8 @@ services:
       - microtaller_network
 
 volumes:
-  mongodb_data:
+  microtaller2_mongodb_data:
+    external: true  
 
 networks:
   microtaller_network:
