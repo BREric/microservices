@@ -21,6 +21,7 @@
 
 2. Abrir una terminal en la raiz del proyecto y ejecutar los siguientes comandos (Asegurese de estar en superusuario):
    - Montar la imagen del proyecto construyendo el dockerfile `docker build -t go_api_container .`.
+   - Hacer cd a logs_services y ejecutar `docker build -t python_logs_service .`
    - Posteriormente, construir el docker compose con `docker-compose build`.
    - Por ultimo, levantar el contenedor `docker-compose up`.
   
