@@ -64,6 +64,14 @@ Descargar los plugins recomendados
 
 habilitar una bash terminal en el job y poner las siguientes lineas de codigo>
 
+
+
+docker exec -it mongodb_container mongosh
+use logs
+show collections  // Para ver las colecciones
+db.logs.find().pretty()  // Para ver los documentos en la colección 'logs'
+
+
 docker build --tag jenkins-container --pull .
 docker-compose up -d --no-recreate --build
 
