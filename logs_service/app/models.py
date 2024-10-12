@@ -1,13 +1,20 @@
-from pymongo import MongoClient
-from bson import ObjectId
+from datetime import datetime
 
 class LogModel:
     def __init__(self, db):
         self.collection = db['logs']
 
-    def create_log(self, log):
-        self.collection.insert_one(log)
-        return log
+    def create_log(self, app_name, log_type, module, summary, description):
+        log = {
+            "app_name": app_name,
+            "log_type": log_type,
+            "module": module,
+            "created_at": datetime.utcnow(),
+            "summary": summary,
+            "description": description,
+        }
+        result = self.collection.insert_one(log)
+        return str(result.inserted_id)
 
     def get_logs(self, filters, page, page_size):
         query = {}
@@ -22,7 +29,4 @@ class LogModel:
             }
 
         logs = self.collection.find(query).sort("created_at", -1)
-        logs = logs.skip((page - 1) * page_size).limit(page_size)
-
-        # Convertir los logs a un formato serializable
-        return [{"id": str(log["_id"]), **log} for log in logs]
+        return logs.skip((page - 1) * page_size).limit(page_size)

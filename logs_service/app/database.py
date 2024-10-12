@@ -1,5 +1,5 @@
-from pymongo import MongoClient
 import os
+from pymongo import MongoClient
 
 def init_db():
     client = MongoClient(os.environ['MONGO_URI'])
