@@ -15,7 +15,7 @@ def create_log():
     if data is None:
         return jsonify({"error": "No data provided"}), 400
 
-    required_fields = ["app_name", "log_type", "module", "summary", "description"]
+    required_fields = ["app_name", "log_type", "summary", "description"]
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing required fields"}), 400
 
@@ -23,7 +23,6 @@ def create_log():
         log_id = logs_model.create_log(
             app_name=data['app_name'],
             log_type=data['log_type'],
-            module=data['module'],
             summary=data['summary'],
             description=data['description']
         )
@@ -65,6 +64,19 @@ def get_logs():
 
     try:
         logs = logs_model.get_logs(filters, page, page_size)
-        return jsonify(list(logs)), 200
+        # Convertir el cursor a una lista de diccionarios
+        logs_list = []
+        for log in logs:
+            log_dict = {
+                "_id": str(log["_id"]),
+                "app_name": log.get("app_name", ""),
+                "log_type": log.get("log_type", ""),
+                "module": log.get("module", ""),
+                "created_at": log.get("created_at", "").isoformat() if log.get("created_at", "") else "",
+                "summary": log.get("summary", ""),
+                "description": log.get("description", ""),
+            }
+            logs_list.append(log_dict)
+        return jsonify(logs_list), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
