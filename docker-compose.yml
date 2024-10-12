@@ -6,7 +6,7 @@ services:
       - "27017:27017"
     command: mongod --noauth
     volumes:
-      - microtaller2_mongodb_data:/data/db  
+      - microtaller2_mongodb_data:/data/db
     networks:
       - microtaller_network
 
@@ -18,8 +18,8 @@ services:
     depends_on:
       - mongodb
     environment:
-      MONGO_URI: mongodb://mongodb:27017
-      MONGO_DB: container-microtaller2
+      MONGO_URI: mongodb://mongodb:27017/logs
+      MONGO_DB: logs
     networks:
       - microtaller_network
 
@@ -31,14 +31,14 @@ services:
     depends_on:
       - mongodb
     environment:
-      MONGO_URI: mongodb://mongodb:27017
-      MONGO_DB: logs_service
+      MONGO_URI: mongodb://mongodb:27017/logs
+      MONGO_DB: logs
     networks:
       - microtaller_network
 
 volumes:
   microtaller2_mongodb_data:
-    external: true  
+    external: true
 
 networks:
   microtaller_network:

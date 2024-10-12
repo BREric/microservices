@@ -8,6 +8,10 @@ def paginate(query, default_limit=10, default_page=1):
         limit = default_limit
         page = default_page
 
-    offset = (page - 1) * limit
-    paginated_query = query.skip(offset).limit(limit)
-    return paginated_query
+    # Asegurarse de que `page` y `limit` son válidos
+    if page < 1:
+        page = 1
+    if limit < 1:
+        limit = default_limit
+
+    return query.skip((page - 1) * limit).limit(limit)

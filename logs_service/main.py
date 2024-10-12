@@ -1,9 +1,9 @@
 from flask import Flask
 from app.routes import log_blueprint
+from app.database import db
 
 app = Flask(__name__)
 
-# Registro de los Blueprints
 app.register_blueprint(log_blueprint)
 
 if __name__ == '__main__':

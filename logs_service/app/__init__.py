@@ -8,11 +8,10 @@ app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "your_secret_key"
 jwt = JWTManager(app)
 
-app.config["MONGO_URI"] = "mongodb://mongodb_container:27017/logs_service"
+app.config["MONGO_URI"] = "mongodb://mongodb_container:27017/logs"
 mongo = PyMongo(app)
 
-client = MongoClient("mongodb://mongodb_container:27017")
-db = client['logs_service']  
+db = mongo.db  
 
 from .routes import log_blueprint
 app.register_blueprint(log_blueprint)

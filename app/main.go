@@ -13,10 +13,10 @@ import (
 func main() {
 	router := gin.Default()
 
-	// Ruta para servir el archivo openAPI.json
+	router.Use(middleware.LoggingMiddleware())
+
 	router.StaticFile("/openapi.json", "./openAPI.json")
 
-	// Ruta para cargar la interfaz de Swagger UI desde la CDN
 	router.GET("/swagger", func(c *gin.Context) {
 		c.Data(http.StatusOK, "text/html; charset=utf-8", []byte(`
             <!DOCTYPE html>
@@ -49,17 +49,14 @@ func main() {
         `))
 	})
 
-	// Rutas públicas
 	public := router.Group("/")
 	{
 		public.POST("/login", gin.WrapF(handlers.Login))
 		public.POST("/forgot_password", gin.WrapF(handlers.ForgotPassword))
 		public.POST("/reset_password", gin.WrapF(handlers.ResetPassword))
 		public.POST("/users", gin.WrapF(handlers.CreateUser))
-		//url:=ginSwagger.URL("http://localhost")
 	}
 
-	// Rutas autenticadas (se aplica middleware)
 	authenticated := router.Group("/")
 	authenticated.Use(middleware.AuthMiddleware())
 	{

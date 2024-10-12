@@ -1,25 +1,35 @@
-# app/routes.py
 from flask import Blueprint, request, jsonify
-from app import db  # Importar `db` desde `app` para que esté disponible en el archivo
+from app.database import db
 from .models import LogModel
+from datetime import datetime
 
-# Define el blueprint
 log_blueprint = Blueprint('log_blueprint', __name__)
 
-# Crear una instancia de LogModel usando la base de datos importada
 logs_model = LogModel(db)
 
 @log_blueprint.route('/logs', methods=['POST'])
 def create_log():
     data = request.get_json()
+
+    # Verificar si se recibió data
+    if data is None:
+        return jsonify({"error": "No data provided"}), 400
+
     required_fields = ["app_name", "log_type", "module", "summary", "description"]
     if not all(field in data for field in required_fields):
         return jsonify({"error": "Missing required fields"}), 400
 
-    log_id = logs_model.create_log(
-        data['app_name'], data['log_type'], data['module'], data['summary'], data['description']
-    )
-    return jsonify({"message": "Log created", "log_id": log_id}), 201
+    try:
+        log_id = logs_model.create_log(
+            app_name=data['app_name'],
+            log_type=data['log_type'],
+            module=data['module'],
+            summary=data['summary'],
+            description=data['description']
+        )
+        return jsonify({"message": "Log created", "log_id": str(log_id)}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500  # Devolver error si algo sale mal
 
 @log_blueprint.route('/logs', methods=['GET'])
 def get_logs():
@@ -29,8 +39,32 @@ def get_logs():
         "start_date": request.args.get("start_date"),
         "end_date": request.args.get("end_date"),
     }
-    page = int(request.args.get("page", 0))
-    page_size = int(request.args.get("page_size", 10))
 
-    logs = logs_model.get_logs(filters, page, page_size)
-    return jsonify(logs), 200
+    # Convertir fechas a formato adecuado si están presentes
+    if filters['start_date']:
+        try:
+            filters['start_date'] = datetime.fromisoformat(filters['start_date'])
+        except ValueError:
+            return jsonify({"error": "Invalid start_date format. Use ISO format."}), 400
+
+    if filters['end_date']:
+        try:
+            filters['end_date'] = datetime.fromisoformat(filters['end_date'])
+        except ValueError:
+            return jsonify({"error": "Invalid end_date format. Use ISO format."}), 400
+
+    try:
+        page = int(request.args.get("page", 1))
+        page_size = int(request.args.get("page_size", 10))
+    except ValueError:
+        return jsonify({"error": "Invalid page or page_size value."}), 400
+
+    # Verificar que `page` y `page_size` sean válidos
+    if page < 1 or page_size < 1:
+        return jsonify({"error": "Page and page_size must be positive integers."}), 400
+
+    try:
+        logs = logs_model.get_logs(filters, page, page_size)
+        return jsonify(list(logs)), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

@@ -1,7 +1,10 @@
 package middleware
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -12,10 +15,74 @@ import (
 
 var jwtSecret = []byte("your_secret_key")
 
-// AuthMiddleware checks the JWT token in the Authorization header
+type LogRequest struct {
+	AppName     string `json:"app_name"`
+	LogType     string `json:"log_type"`
+	Module      string `json:"module"`
+	Summary     string `json:"summary"`
+	Description string `json:"description"`
+}
+
+func SendLog(logReq LogRequest) error {
+	jsonData, err := json.Marshal(logReq)
+	if err != nil {
+		return err
+	}
+
+	pythonLogServiceURL := "http://localhost:5000/logs"
+
+	req, err := http.NewRequest("POST", pythonLogServiceURL, bytes.NewBuffer(jsonData))
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusCreated {
+		return fmt.Errorf("failed to send log, status code: %d", resp.StatusCode)
+	}
+
+	log.Println("Log sent successfully")
+	return nil
+}
+
+func LoggingMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		startTime := time.Now()
+
+		path := c.Request.URL.Path
+		method := c.Request.Method
+		ip := c.ClientIP()
+
+		c.Next()
+
+		statusCode := c.Writer.Status()
+		latency := time.Since(startTime)
+		userAgent := c.Request.UserAgent()
+
+		logReq := LogRequest{
+			AppName:     "MyGoApp",
+			LogType:     "INFO",
+			Module:      "LoggingMiddleware",
+			Summary:     fmt.Sprintf("Solicitud %s %s", method, path),
+			Description: fmt.Sprintf("Método: %s, IP: %s, Estado: %d, Latencia: %s, User-Agent: %s", method, ip, statusCode, latency, userAgent),
+		}
+
+		SendLog(logReq)
+
+		log.Printf("[%d] %s %s %s %s in %v\n", statusCode, method, path, ip, userAgent, latency)
+	}
+}
+
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		// Obtener el token de la cabecera Authorization
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header required"})
@@ -23,7 +90,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// El token JWT suele tener el formato "Bearer {token}"
 		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 		if tokenString == authHeader {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Bearer token required"})
@@ -31,7 +97,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Validar y parsear el token
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
@@ -45,9 +110,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		// Verificar si el token es válido
 		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			// Verificar el campo de expiración
 			if exp, ok := claims["exp"].(float64); ok {
 				if time.Now().Unix() > int64(exp) {
 					c.JSON(http.StatusUnauthorized, gin.H{"error": "token expired"})
@@ -56,17 +119,14 @@ func AuthMiddleware() gin.HandlerFunc {
 				}
 			}
 
-			// Verificar si el campo 'username' existe y no está vacío
 			if username, ok := claims["username"].(string); !ok || username == "" {
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token: username missing"})
 				c.Abort()
 				return
 			}
 
-			// Añadir las claims al contexto para que los siguientes handlers puedan acceder a ellas
 			c.Set("userClaims", claims)
 
-			// Continuar con el siguiente middleware/handler
 			c.Next()
 		} else {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token claims"})

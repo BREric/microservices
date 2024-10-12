@@ -1,8 +1,9 @@
 from pymongo import MongoClient
+import os
 
 def init_db():
-    client = MongoClient("mongodb://mongodb_container:27017") 
-    db = client['logs_service']
+    client = MongoClient(os.environ['MONGO_URI'])
+    db = client[os.environ['MONGO_DB']]
     return db
 
 db = init_db()
