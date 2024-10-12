@@ -21,6 +21,7 @@
 
 2. Abrir una terminal en la raiz del proyecto y ejecutar los siguientes comandos (Asegurese de estar en superusuario):
    - Montar la imagen del proyecto construyendo el dockerfile `docker build -t go_api_container .`.
+   - Hacer cd a logs_services y ejecutar `docker build -t python_logs_service .`
    - Posteriormente, construir el docker compose con `docker-compose build`.
    - Por ultimo, levantar el contenedor `docker-compose up`.
   
@@ -62,6 +63,14 @@ EJecutar para obtener la contrasena por defecto del jenkins docker exec jenkins 
 Descargar los plugins recomendados
 
 habilitar una bash terminal en el job y poner las siguientes lineas de codigo>
+
+
+
+docker exec -it mongodb_container mongosh
+use logs
+show collections  // Para ver las colecciones
+db.logs.find().pretty()  // Para ver los documentos en la colección 'logs'
+
 
 docker build --tag jenkins-container --pull .
 docker-compose up -d --no-recreate --build
