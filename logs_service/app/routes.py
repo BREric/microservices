@@ -10,8 +10,7 @@ logs_model = LogModel(db)
 @log_blueprint.route('/logs', methods=['POST'])
 def create_log():
     data = request.get_json()
-
-    # Verificar si se recibió data
+    print(f"Datos recibidos: {data}")
     if data is None:
         return jsonify({"error": "No data provided"}), 400
 
@@ -23,12 +22,14 @@ def create_log():
         log_id = logs_model.create_log(
             app_name=data['app_name'],
             log_type=data['log_type'],
+            module=data['module'],
             summary=data['summary'],
             description=data['description']
         )
         return jsonify({"message": "Log created", "log_id": str(log_id)}), 201
     except Exception as e:
-        return jsonify({"error": str(e)}), 500  # Devolver error si algo sale mal
+        print(f"Error creating log: {e}")
+        return jsonify({"error": str(e)}), 500  
 
 @log_blueprint.route('/logs', methods=['GET'])
 def get_logs():

@@ -29,7 +29,7 @@ func SendLog(logReq LogRequest) error {
 		return err
 	}
 
-	pythonLogServiceURL := "http://localhost:5000/logs"
+	pythonLogServiceURL := "http://logs_service:5000/logs"
 
 	req, err := http.NewRequest("POST", pythonLogServiceURL, bytes.NewBuffer(jsonData))
 	if err != nil {
@@ -49,7 +49,6 @@ func SendLog(logReq LogRequest) error {
 		return fmt.Errorf("failed to send log, status code: %d", resp.StatusCode)
 	}
 
-	log.Println("Log sent successfully")
 	return nil
 }
 
@@ -75,7 +74,10 @@ func LoggingMiddleware() gin.HandlerFunc {
 			Description: fmt.Sprintf("Método: %s, IP: %s, Estado: %d, Latencia: %s, User-Agent: %s", method, ip, statusCode, latency, userAgent),
 		}
 
-		SendLog(logReq)
+		err := SendLog(logReq)
+		if err != nil {
+			log.Println("Error sending log:", err)
+		}
 
 		log.Printf("[%d] %s %s %s %s in %v\n", statusCode, method, path, ip, userAgent, latency)
 	}
