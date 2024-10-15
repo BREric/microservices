@@ -10,11 +10,11 @@ COPY . .
 # Instalar las dependencias de la aplicación
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Establecer la variable de entorno para Flask
-ENV FLASK_APP=app.py
+# Instalar gunicorn
+RUN pip install gunicorn
 
 # Exponer el puerto en el que correrá la aplicación
 EXPOSE 5000
 
-# Comando para correr la aplicación Flask
-CMD ["flask", "run", "--host=0.0.0.0", "--port=5000"]
+# Comando para correr la aplicación con Gunicorn, usando un solo worker con hilos y configuración adicional
+CMD ["gunicorn", "-c", "app/gunicorn.conf.py", "--bind", "0.0.0.0:5000", "main:app", "--workers=1", "--threads=3"]

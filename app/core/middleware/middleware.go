@@ -21,6 +21,7 @@ type LogRequest struct {
 	Module      string `json:"module"`
 	Summary     string `json:"summary"`
 	Description string `json:"description"`
+	CreatedAt   string `json:"created_at"`
 }
 
 func SendLog(logReq LogRequest) error {
@@ -54,10 +55,10 @@ func SendLog(logReq LogRequest) error {
 	}
 
 	err = ch.Publish(
-		"",          // exchange
-		q.Name,      // routing key
-		false,       // mandatory
-		false,       // immediate
+		"",     // exchange
+		q.Name, // routing key
+		false,  // mandatory
+		false,  // immediate
 		amqp.Publishing{
 			ContentType: "application/json",
 			Body:        jsonData,
@@ -90,6 +91,7 @@ func LoggingMiddleware() gin.HandlerFunc {
 			Module:      "LoggingMiddleware",
 			Summary:     fmt.Sprintf("Solicitud %s %s", method, path),
 			Description: fmt.Sprintf("Método: %s, IP: %s, Estado: %d, Latencia: %s, User-Agent: %s", method, ip, statusCode, latency, userAgent),
+			CreatedAt:   time.Now().Format("2006-01-02T15:04:05.999999"),
 		}
 
 		err := SendLog(logReq)
