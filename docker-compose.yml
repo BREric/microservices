@@ -36,6 +36,15 @@ services:
     networks:
       - microtaller_network
 
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq_container
+    ports:
+      - "5672:5672" 
+      - "15672:15672" 
+    networks:
+      - microtaller_network
+
 volumes:
   microtaller2_mongodb_data:
     external: true

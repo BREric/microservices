@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/streadway/amqp"
 )
 
 var jwtSecret = []byte("your_secret_key")
@@ -29,24 +29,42 @@ func SendLog(logReq LogRequest) error {
 		return err
 	}
 
-	pythonLogServiceURL := "http://logs_service:5000/logs"
+	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq:5672/")
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
 
-	req, err := http.NewRequest("POST", pythonLogServiceURL, bytes.NewBuffer(jsonData))
+	ch, err := conn.Channel()
+	if err != nil {
+		return err
+	}
+	defer ch.Close()
+
+	q, err := ch.QueueDeclare(
+		"logs_queue", // name
+		true,         // durable
+		false,        // delete when unused
+		false,        // exclusive
+		false,        // no-wait
+		nil,          // arguments
+	)
 	if err != nil {
 		return err
 	}
 
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	err = ch.Publish(
+		"",          // exchange
+		q.Name,      // routing key
+		false,       // mandatory
+		false,       // immediate
+		amqp.Publishing{
+			ContentType: "application/json",
+			Body:        jsonData,
+		},
+	)
 	if err != nil {
 		return err
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusCreated {
-		return fmt.Errorf("failed to send log, status code: %d", resp.StatusCode)
 	}
 
 	return nil

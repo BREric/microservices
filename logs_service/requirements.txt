@@ -2,3 +2,4 @@ Flask==3.0.3
 pymongo==4.10.1
 flask_jwt_extended
 flask_pymongo
+pika
