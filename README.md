@@ -64,34 +64,46 @@ docker build -t jenkins-container .
 
 #### 4.3. Acceder a la consola del contenedor:
 
+```
   docker exec -it --user root jenkins bash
+```
 
 #### 4.4. Dentro de la consola del contenedor, ejecutar:
 
+```
   usermod -aG docker jenkins
   sudo chmod 666 /var/run/docker.sock
-  npm install -g cucumber
+```
 
 #### 4.5. Para salir de la consola:
 
+```
   exit
+```
 
 #### 4.6. Reiniciar el contenedor:
 
+  ```
   docker restart jenkins
+```
 
 #### 4.7. Abrir en el navegador: 
+```
 
   http://localhost:8081/
+```
 
 #### 4.8. Obtener la contraseña por defecto de Jenkins:
 
-  docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+  ```
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
 
 #### 4.9. Descargar los plugins recomendados.
 
 #### 4.10. Despliegue en Jenkins
-Para desplegar en Jenkins, puedes hacerlo de las siguientes maneras:
+
+  Para desplegar en Jenkins, puedes hacerlo de las siguientes maneras:
 
 * proyecto freestyle:
 
@@ -199,7 +211,8 @@ volumes:
 
 networks:
   microtaller_network:
-    driver: bridge ```
+    driver: bridge
+```
 
 ## NOTA FINAL:
 
