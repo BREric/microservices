@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -30,7 +31,9 @@ func SendLog(logReq LogRequest) error {
 		return err
 	}
 
-	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq:5672/")
+	// Cambiar esta línea para leer la variable de entorno
+	rabbitMQHost := os.Getenv("RABBITMQ_HOST") // Leer la variable de entorno
+	conn, err := amqp.Dial(rabbitMQHost)       // Usar el valor de la variable de entorno
 	if err != nil {
 		return err
 	}

@@ -40,7 +40,6 @@ def get_logs():
         "end_date": request.args.get("end_date"),
     }
 
-    # Convertir fechas a formato adecuado si están presentes
     if filters['start_date']:
         try:
             filters['start_date'] = datetime.fromisoformat(filters['start_date'])
@@ -59,13 +58,11 @@ def get_logs():
     except ValueError:
         return jsonify({"error": "Invalid page or page_size value."}), 400
 
-    # Verificar que `page` y `page_size` sean válidos
     if page < 1 or page_size < 1:
         return jsonify({"error": "Page and page_size must be positive integers."}), 400
 
     try:
         logs = logs_model.get_logs(filters, page, page_size)
-        # Convertir el cursor a una lista de diccionarios
         logs_list = []
         for log in logs:
             log_dict = {

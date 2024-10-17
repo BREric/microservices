@@ -1,9 +1,9 @@
 services:
-  mongodb:
+  mongodb_go:
     image: mongo:latest
-    container_name: mongodb_container
+    container_name: mongodb_container_go
     ports:
-      - "27017:27017"
+      - "27018:27017"  
     command: mongod --noauth
     volumes:
       - microtaller2_mongodb_data:/data/db
@@ -16,10 +16,24 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mongodb
+      - mongodb_go
     environment:
-      MONGO_URI: mongodb://mongodb:27017/logs
+      MONGO_URI: mongodb://mongodb_go:27017/logs  
       MONGO_DB: logs
+      RABBITMQ_HOST: amqp://guest:guest@rabbitmq:5672/
+      RABBITMQ_QUEUE: logs_queue
+      JWT_SECRET_KEY: your_secret_key
+    networks:
+      - microtaller_network
+
+  mongodb_py:
+    image: mongo:latest
+    container_name: mongodb_container_py
+    ports:
+      - "27017:27017"  
+    command: mongod --noauth
+    volumes:
+      - micro_mongodb_data_py:/data/db
     networks:
       - microtaller_network
 
@@ -29,25 +43,30 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - mongodb
+      - mongodb_py
     environment:
-      MONGO_URI: mongodb://mongodb:27017/logs
+      MONGO_URI: mongodb://mongodb_py:27017/logs
       MONGO_DB: logs
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_QUEUE: logs_queue
+      JWT_SECRET_KEY: your_secret_key
     networks:
       - microtaller_network
 
   rabbitmq:
     image: rabbitmq:management
-    container_name: rabbitmq_container
+    container_name: rabbitmq
     ports:
-      - "5672:5672" 
-      - "15672:15672" 
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - microtaller_network
 
 volumes:
   microtaller2_mongodb_data:
-    external: true
+    external: true  
+  micro_mongodb_data_py:
+    external: false  
 
 networks:
   microtaller_network:
