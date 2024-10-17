@@ -24,7 +24,7 @@
 ```
 ### 2. Construcción y Ejecución del Proyecto
 
-Abrir una ´terminal´ en la raíz del proyecto y ejecutar los siguientes comandos (asegúrese de estar en superusuario):
+Abrir una 'terminal' en la raíz del proyecto y ejecutar los siguientes comandos (asegúrese de estar en superusuario):
 
 Para iniciar la aplicación por primera vez, utiliza el siguiente comando:
 
@@ -35,7 +35,7 @@ Si ya se ha ejecutado y solo deseas reanudar la aplicación, ejecuta:
 docker-compose up
 
 ### 3. Implementación y Ejecución de Pruebas
-Para las pruebas, se implementó un script. Solo necesitas navegar a la carpeta de ´test´ y ejecutar:
+Para las pruebas, se implementó un script. Solo necesitas navegar a la carpeta de 'test' y ejecutar:
 
 cd tests
 npm run test:app
