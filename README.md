@@ -23,6 +23,7 @@
    )
 ```
 ### 2. Construcción y Ejecución del Proyecto
+
 Abrir una terminal en la raíz del proyecto y ejecutar los siguientes comandos (asegúrese de estar en superusuario):
 
 Para iniciar la aplicación por primera vez, utiliza el siguiente comando:
@@ -44,7 +45,7 @@ npm run test:app
 cd /test/jenkins/
 docker build -t jenkins-container .
 
-4.2. Para ejecutar Jenkins en:
+#### 4.2. Para ejecutar Jenkins en:
    Windows:
       docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home -p 8081:8080 --name jenkins jenkins-container
    Linux:
@@ -55,28 +56,28 @@ docker build -t jenkins-container .
   --name jenkins \
   jenkins-container
 
-4.3. Acceder a la consola del contenedor:
+#### 4.3. Acceder a la consola del contenedor:
 docker exec -it --user root jenkins bash
 
-4.4. Dentro de la consola del contenedor, ejecutar:
+#### 4.4. Dentro de la consola del contenedor, ejecutar:
 usermod -aG docker jenkins
 sudo chmod 666 /var/run/docker.sock
 npm install -g cucumber
 
-4.5. Para salir de la consola:
+#### 4.5. Para salir de la consola:
 exit
 
-4.6. Reiniciar el contenedor:
+#### 4.6. Reiniciar el contenedor:
 docker restart jenkins
 
-4.7. Abrir en el navegador: http://localhost:8081/
+#### 4.7. Abrir en el navegador: http://localhost:8081/
 
-4.8. Obtener la contraseña por defecto de Jenkins:
+#### 4.8. Obtener la contraseña por defecto de Jenkins:
 docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
-4.9. Descargar los plugins recomendados.
+#### 4.9. Descargar los plugins recomendados.
 
-4.10. Despliegue en Jenkins
+#### 4.10. Despliegue en Jenkins
 Para desplegar en Jenkins, puedes hacerlo de las siguientes maneras:
 
 proyecto freestyle:
@@ -185,7 +186,7 @@ networks:
     driver: bridge
 
 
-### NOTA FINAL:
+## NOTA FINAL:
 
 Asegúrate de que todos los servicios estén corriendo antes de realizar pruebas.
 Si encuentras algún problema, revisa los logs de Docker para identificar posibles errores.
