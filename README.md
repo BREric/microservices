@@ -46,8 +46,12 @@ cd /test/jenkins/
 docker build -t jenkins-container .
 
 #### 4.2. Para ejecutar Jenkins en:
+
    Windows:
+
+   
       docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home -p 8081:8080 --name jenkins jenkins-container
+      
    Linux:
       docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock \  
