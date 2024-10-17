@@ -21,6 +21,7 @@
        fromEmail    = "" // Cambiar por el correo emisor
        password     = "" // Cambiar por la contraseña autogenerada en la verificación de dos pasos
    )
+```
 ### 2. Construcción y Ejecución del Proyecto
 Abrir una terminal en la raíz del proyecto y ejecutar los siguientes comandos (asegúrese de estar en superusuario):
 
