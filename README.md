@@ -40,7 +40,7 @@ cd tests
 npm run test:app
 
 ### 4. Configuración de Jenkins
-4.1. Navegar a la carpeta donde se encuentra el Dockerfile de Jenkins:
+#### 4.1. Navegar a la carpeta donde se encuentra el Dockerfile de Jenkins:
 cd /test/jenkins/
 docker build -t jenkins-container .
 
