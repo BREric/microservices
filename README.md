@@ -47,50 +47,61 @@ docker build -t jenkins-container .
 
 #### 4.2. Para ejecutar Jenkins en:
 
-   Windows:
+   * Windows:
 
    
       docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v jenkins_home:/var/jenkins_home -p 8081:8080 --name jenkins jenkins-container
       
-   Linux:
-      docker run -d \
+   * Linux:
+
+   
+    ```docker run -d \
   -v /var/run/docker.sock:/var/run/docker.sock \  
   -v jenkins_home:/var/jenkins_home \            
   -p 8081:8080 \                                 
   --name jenkins \
-  jenkins-container
+  jenkins-container```
 
 #### 4.3. Acceder a la consola del contenedor:
-docker exec -it --user root jenkins bash
+
+  docker exec -it --user root jenkins bash
 
 #### 4.4. Dentro de la consola del contenedor, ejecutar:
-usermod -aG docker jenkins
-sudo chmod 666 /var/run/docker.sock
-npm install -g cucumber
+
+  usermod -aG docker jenkins
+  sudo chmod 666 /var/run/docker.sock
+  npm install -g cucumber
 
 #### 4.5. Para salir de la consola:
-exit
+
+  exit
 
 #### 4.6. Reiniciar el contenedor:
-docker restart jenkins
 
-#### 4.7. Abrir en el navegador: http://localhost:8081/
+  docker restart jenkins
+
+#### 4.7. Abrir en el navegador: 
+
+  http://localhost:8081/
 
 #### 4.8. Obtener la contraseña por defecto de Jenkins:
-docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+
+  docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 #### 4.9. Descargar los plugins recomendados.
 
 #### 4.10. Despliegue en Jenkins
 Para desplegar en Jenkins, puedes hacerlo de las siguientes maneras:
 
-proyecto freestyle:
-   Introduce la URL del proyecto de GitHub: https://github.com/BREric/microservices
-Selecciona terminal de sh y dentro de esa terminal, ejecuta los mismos comandos que en el primer paso (Docker Compose y npm run test).
+* proyecto freestyle:
 
-proyecto pipelines:
 
-   pipeline {
+   -Introduce la URL del proyecto de GitHub: https://github.com/BREric/microservices
+   -Selecciona terminal de sh y dentro de esa terminal, ejecuta los mismos comandos que en el primer paso (Docker Compose y npm run test).
+
+* proyecto pipelines:
+
+   ``` pipeline {
     agent any
     stages {
         stage('Build') {
@@ -108,13 +119,14 @@ proyecto pipelines:
             }
         }
     }
-}
+} ```
 
 
 
 ### 5. Configuración del Docker Compose
-Modificar las siguientes líneas dentro del docker-compose.yml:
 
+Modificar las siguientes líneas dentro del docker-compose.yml:
+```
 services:
   mongodb_go:
     image: mongo:latest
@@ -187,8 +199,7 @@ volumes:
 
 networks:
   microtaller_network:
-    driver: bridge
-
+    driver: bridge ```
 
 ## NOTA FINAL:
 
