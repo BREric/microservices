@@ -11,34 +11,34 @@
 
 ### 1. Configuración del Correo Electrónico
 
-1.1. Crear un correo electrónico de su preferencia y activar la verificación en dos pasos.
-1.2. Modificar el código en `email.go` que se encuentra en la carpeta `/utils/`:
+#### 1.1. Crear un correo electrónico de su preferencia y activar la verificación en dos pasos.
+#### 1.2. Modificar el código en `email.go` que se encuentra en la carpeta `/utils/`:
 
-   ```go
-   var (
-       smtpHost     = "smtp.gmail.com"
-       smtpPort     = 587
-       fromEmail    = "" // Cambiar por el correo emisor
-       password     = "" // Cambiar por la contraseña autogenerada en la verificación de dos pasos
-   )
+  ```go
+     var (
+         smtpHost     = "smtp.gmail.com"
+         smtpPort     = 587
+         fromEmail    = "" // Cambiar por el correo emisor
+         password     = "" // Cambiar por la contraseña autogenerada en la verificación de dos pasos
+     )
 ```
 ### 2. Construcción y Ejecución del Proyecto
 
-Abrir una `terminal` en la raíz del proyecto y ejecutar los siguientes comandos (asegúrese de estar en superusuario):
+  Abrir una `terminal` en la raíz del proyecto y ejecutar los siguientes comandos (asegúrese de estar en superusuario):
 
-Para iniciar la aplicación por primera vez, utiliza el siguiente comando:
+  Para iniciar la aplicación por primera vez, utiliza el siguiente comando:
 
-docker-compose up --build
+    docker-compose up --build
 
-Si ya se ha ejecutado y solo deseas reanudar la aplicación, ejecuta:
+  Si ya se ha ejecutado y solo deseas reanudar la aplicación, ejecuta:
 
-docker-compose up
+    docker-compose up
 
 ### 3. Implementación y Ejecución de Pruebas
-Para las pruebas, se implementó un script. Solo necesitas navegar a la carpeta de `/test` y ejecutar:
+  Para las pruebas, se implementó un script. Solo necesitas navegar a la carpeta de `/test` y ejecutar:
 
-cd tests
-npm run test:app
+    cd tests
+    npm run test:app
 
 ### 4. Configuración de Jenkins
 #### 4.1. Navegar a la carpeta donde se encuentra el Dockerfile de Jenkins:
