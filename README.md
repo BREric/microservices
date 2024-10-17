@@ -108,8 +108,8 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 * proyecto freestyle:
 
 
-   -Introduce la URL del proyecto de GitHub: https://github.com/BREric/microservices
-   -Selecciona terminal de sh y dentro de esa terminal, ejecuta los mismos comandos que en el primer paso (Docker Compose y npm run test).
+   - Introduce la URL del proyecto de GitHub: https://github.com/BREric/microservices
+   - Selecciona terminal de sh y dentro de esa terminal, ejecuta los mismos comandos que en el primer paso (Docker Compose y npm run test).
 
 * proyecto pipelines:
 
