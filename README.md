@@ -33,13 +33,13 @@ Si ya se ha ejecutado y solo deseas reanudar la aplicación, ejecuta:
 
 docker-compose up
 
-3. Implementación y Ejecución de Pruebas
+### 3. Implementación y Ejecución de Pruebas
 Para las pruebas, se implementó un script. Solo necesitas navegar a la carpeta de pruebas y ejecutar:
 
 cd tests
 npm run test:app
 
-4. Configuración de Jenkins
+### 4. Configuración de Jenkins
 4.1. Navegar a la carpeta donde se encuentra el Dockerfile de Jenkins:
 cd /test/jenkins/
 docker build -t jenkins-container .
@@ -107,7 +107,7 @@ proyecto pipelines:
 
 
 
-5. Configuración del Docker Compose
+### 5. Configuración del Docker Compose
 Modificar las siguientes líneas dentro del docker-compose.yml:
 
 services:
@@ -185,7 +185,7 @@ networks:
     driver: bridge
 
 
-NOTA FINAL:
+### NOTA FINAL:
 
 Asegúrate de que todos los servicios estén corriendo antes de realizar pruebas.
 Si encuentras algún problema, revisa los logs de Docker para identificar posibles errores.
