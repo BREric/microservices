@@ -31,9 +31,8 @@ func SendLog(logReq LogRequest) error {
 		return err
 	}
 
-	// Cambiar esta línea para leer la variable de entorno
-	rabbitMQHost := os.Getenv("RABBITMQ_HOST") // Leer la variable de entorno
-	conn, err := amqp.Dial(rabbitMQHost)       // Usar el valor de la variable de entorno
+	rabbitMQHost := os.Getenv("RABBITMQ_HOST")
+	conn, err := amqp.Dial(rabbitMQHost)
 	if err != nil {
 		return err
 	}
@@ -46,22 +45,22 @@ func SendLog(logReq LogRequest) error {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"logs_queue", // name
-		true,         // durable
-		false,        // delete when unused
-		false,        // exclusive
-		false,        // no-wait
-		nil,          // arguments
+		"logs_queue",
+		true,
+		false,
+		false,
+		false,
+		nil,
 	)
 	if err != nil {
 		return err
 	}
 
 	err = ch.Publish(
-		"",     // exchange
-		q.Name, // routing key
-		false,  // mandatory
-		false,  // immediate
+		"",
+		q.Name,
+		false,
+		false,
 		amqp.Publishing{
 			ContentType: "application/json",
 			Body:        jsonData,

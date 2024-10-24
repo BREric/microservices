@@ -3,7 +3,7 @@ services:
     image: mongo:latest
     container_name: mongodb_container_go
     ports:
-      - "27018:27017"  
+      - "27018:27017"
     command: mongod --noauth
     volumes:
       - microtaller2_mongodb_data:/data/db
@@ -30,7 +30,7 @@ services:
     image: mongo:latest
     container_name: mongodb_container_py
     ports:
-      - "27017:27017"  
+      - "27017:27017"
     command: mongod --noauth
     volumes:
       - micro_mongodb_data_py:/data/db
@@ -61,6 +61,38 @@ services:
       - "15672:15672"
     networks:
       - microtaller_network
+
+  health_service:
+    build: ./health-check
+    container_name: rust_health_service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql_db
+      - api
+      - logs_service
+    environment:
+      USER_SERVICE_URL: http://go_api_container:8080/health
+      LOG_SERVICE_URL: http://python_logs_service:5000/health
+      DATABASE_URL: mysql://root:password@mysql_db:3306/health_db
+    networks:
+      - microtaller_network
+
+  mysql_db:
+    image: mysql:latest
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: health_db
+    ports:
+      - "3306:3306"
+    networks:
+      - microtaller_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   microtaller2_mongodb_data:
