@@ -73,8 +73,8 @@ When('realizo la solicitud de eliminación de una cuenta diferente', async funct
         .set('Accept', 'application/json');
 });
 
-Then('obtengo un código de estado 403 al intentar eliminar una cuenta diferente', function () {
-    assert.strictEqual(response.statusCode, 403, `Expected status code 403 but got ${response.statusCode}`);
+Then('obtengo un código de estado 404 al intentar eliminar una cuenta diferente', function () {
+    assert.strictEqual(response.statusCode, 404, `Expected status code 403 but got ${response.statusCode}`);
 
     // Validar la estructura de la respuesta de error con JSON Schema
     const valid = ajv.validate(apiSchema.properties.ErrorResponse, response.body);

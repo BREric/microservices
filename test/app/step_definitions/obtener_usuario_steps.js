@@ -59,8 +59,8 @@ When('realizo una solicitud GET a users seguido de un id de usuario diferente al
         .set('Authorization', `Bearer ${token}`);
 });
 
-Then('obtengo un código de estado 403 indicando que no tengo permiso para acceder a la información de otro usuario', function () {
-    assert.strictEqual(response.statusCode, 403);
+Then('obtengo un código de estado 404 indicando que no tengo permiso para acceder a la información de otro usuario', function () {
+    assert.strictEqual(response.statusCode, 404);
 
 
     // Validar la estructura de la respuesta de error con JSON Schema

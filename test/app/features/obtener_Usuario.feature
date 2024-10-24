@@ -10,4 +10,4 @@ Feature: La API permite a los usuarios obtener detalles de su propio usuario
   Scenario: Intentar obtener detalles de otro usuario
     Given soy un usuario autenticado
     When realizo una solicitud GET a users seguido de un id de usuario diferente al mío
-    Then obtengo un código de estado 403 indicando que no tengo permiso para acceder a la información de otro usuario
+    Then obtengo un código de estado 404 indicando que no tengo permiso para acceder a la información de otro usuario

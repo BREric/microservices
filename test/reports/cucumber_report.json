@@ -19,7 +19,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 56764200
+              "duration": 163500900
             }
           },
           {
@@ -32,7 +32,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 6788900
+              "duration": 51891499
             }
           },
           {
@@ -45,7 +45,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 30381399
+              "duration": 113621299
             }
           }
         ],
@@ -69,7 +69,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 60039099
+              "duration": 153055200
             }
           },
           {
@@ -82,7 +82,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 4258199
+              "duration": 29358000
             }
           },
           {
@@ -95,7 +95,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1319899
+              "duration": 6086000
             }
           }
         ],
@@ -119,7 +119,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 79399
+              "duration": 275200
             }
           },
           {
@@ -132,7 +132,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 5974400
+              "duration": 36083899
             }
           },
           {
@@ -145,7 +145,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 912499
+              "duration": 2521800
             }
           }
         ],
@@ -176,11 +176,11 @@
             "line": 4,
             "name": "Tengo un nombre de usuario, email y contraseña válidos",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:14"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:19"
             },
             "result": {
               "status": "passed",
-              "duration": 235300
+              "duration": 857100
             }
           },
           {
@@ -189,11 +189,11 @@
             "line": 5,
             "name": "invoco el servicio de creación de usuario con los datos",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:24"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:29"
             },
             "result": {
               "status": "passed",
-              "duration": 57680100
+              "duration": 190542900
             }
           },
           {
@@ -202,11 +202,25 @@
             "line": 6,
             "name": "obtengo un código de estado 201",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:30"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:36"
             },
             "result": {
               "status": "passed",
-              "duration": 13122899
+              "duration": 42262400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 7,
+            "name": "el servicio de logs debe contener un registro que indique la creación del usuario",
+            "match": {
+              "location": "app\\step_definitions\\crear_usuario_steps.js:47"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 2071041300,
+              "error_message": "AssertionError [ERR_ASSERTION]: No se encontró ningún registro de log relacionado con la creación del usuario: Jedidiah_Hackett17\n    at World.<anonymous> (C:\\Users\\jhona\\Desktop\\microservicios\\test\\app\\step_definitions\\crear_usuario_steps.js:66:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
             }
           }
         ],
@@ -217,59 +231,72 @@
         "description": "",
         "id": "la-api-permite-a-los-usuarios-crear-un-nuevo-usuario;intentar-crear-un-usuario-con-nombre-de-usuario-ya-registrado",
         "keyword": "Scenario",
-        "line": 8,
+        "line": 9,
         "name": "Intentar crear un usuario con nombre de usuario ya registrado",
         "steps": [
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 9,
+            "line": 10,
             "name": "Tengo un nombre de usuario ya está registrado",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:42"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:72"
             },
             "result": {
               "status": "passed",
-              "duration": 413399
+              "duration": 1105600
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 10,
+            "line": 11,
             "name": "invoco el servicio de creación de usuario con el nombre de usuario",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:50"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:81"
             },
             "result": {
               "status": "passed",
-              "duration": 4151200
+              "duration": 34850199
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 11,
+            "line": 12,
             "name": "obtengo un código de estado 409 indicando conflicto",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:56"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:87"
             },
             "result": {
               "status": "passed",
-              "duration": 167400
+              "duration": 204399
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 12,
+            "line": 13,
             "name": "un mensaje que indique que el nombre de usuario ya está en uso",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:60"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:91"
             },
             "result": {
               "status": "passed",
-              "duration": 1630999
+              "duration": 2347100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 14,
+            "name": "el servicio de logs debe contener un registro que indique un intento fallido de creación debido a un nombre de usuario ya registrado",
+            "match": {
+              "location": "app\\step_definitions\\crear_usuario_steps.js:101"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2023435400
             }
           }
         ],
@@ -280,46 +307,60 @@
         "description": "",
         "id": "la-api-permite-a-los-usuarios-crear-un-nuevo-usuario;intentar-crear-un-usuario-sin-proporcionar-un-nombre-de-usuario",
         "keyword": "Scenario",
-        "line": 14,
+        "line": 16,
         "name": "Intentar crear un usuario sin proporcionar un nombre de usuario",
         "steps": [
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 15,
+            "line": 17,
             "name": "No ingreso un nombre de usuario",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:71"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:124"
             },
             "result": {
               "status": "passed",
-              "duration": 88500
+              "duration": 194800
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 16,
+            "line": 18,
             "name": "invoco el servicio de creación de usuario",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:79"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:133"
             },
             "result": {
               "status": "passed",
-              "duration": 3574999
+              "duration": 20331799
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 17,
+            "line": 19,
             "name": "obtengo un código de estado 400 indicando error en la solicitud",
             "match": {
-              "location": "app\\step_definitions\\crear_usuario_steps.js:85"
+              "location": "app\\step_definitions\\crear_usuario_steps.js:139"
             },
             "result": {
               "status": "passed",
-              "duration": 215099
+              "duration": 415799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "el servicio de logs debe contener un registro que indique un intento fallido de creación debido a datos incompletos",
+            "match": {
+              "location": "app\\step_definitions\\crear_usuario_steps.js:150"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 1018909699,
+              "error_message": "AssertionError [ERR_ASSERTION]: No se encontró ningún registro de log relacionado con el intento fallido de creación debido a datos incompletos\n    at World.<anonymous> (C:\\Users\\jhona\\Desktop\\microservicios\\test\\app\\step_definitions\\crear_usuario_steps.js:167:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
             }
           }
         ],
@@ -341,46 +382,46 @@
         "description": "",
         "id": "la-api-permite-a-los-usuarios-eliminar-su-cuenta;yo-como-usuario-no-autenticado-quiero-eliminar-mi-cuenta",
         "keyword": "Scenario",
-        "line": 4,
+        "line": 3,
         "name": "Yo como usuario no autenticado quiero eliminar mi cuenta",
         "steps": [
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 5,
+            "line": 4,
             "name": "Soy un usuario no autenticado para eliminar mi cuenta",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:33"
             },
             "result": {
               "status": "passed",
-              "duration": 68900
+              "duration": 248300
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 6,
+            "line": 5,
             "name": "invoco el servicio de eliminación de mi cuenta sin autenticar",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:37"
             },
             "result": {
               "status": "passed",
-              "duration": 3443499
+              "duration": 20676899
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 7,
+            "line": 6,
             "name": "obtengo un código de estado 401 al intentar eliminar mi cuenta sin autenticar",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:43"
             },
             "result": {
               "status": "passed",
-              "duration": 10719699
+              "duration": 27739300
             }
           }
         ],
@@ -391,46 +432,46 @@
         "description": "",
         "id": "la-api-permite-a-los-usuarios-eliminar-su-cuenta;yo-como-usuario-quiero-eliminar-una-cuenta-que-no-es-la-mía",
         "keyword": "Scenario",
-        "line": 10,
+        "line": 8,
         "name": "Yo como usuario quiero eliminar una cuenta que no es la mía",
         "steps": [
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 11,
+            "line": 9,
             "name": "Soy un usuario autenticado para eliminar otra cuenta",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:55"
             },
             "result": {
               "status": "passed",
-              "duration": 56706299
+              "duration": 112753599
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 12,
+            "line": 10,
             "name": "realizo la solicitud de eliminación de una cuenta diferente",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:69"
             },
             "result": {
               "status": "passed",
-              "duration": 4722400
+              "duration": 57443199
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 13,
-            "name": "obtengo un código de estado 403 al intentar eliminar una cuenta diferente",
+            "line": 11,
+            "name": "obtengo un código de estado 404 al intentar eliminar una cuenta diferente",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:76"
             },
             "result": {
               "status": "passed",
-              "duration": 733099
+              "duration": 1600899
             }
           }
         ],
@@ -441,46 +482,46 @@
         "description": "",
         "id": "la-api-permite-a-los-usuarios-eliminar-su-cuenta;yo-como-usuario-quiero-eliminar-mi-cuenta",
         "keyword": "Scenario",
-        "line": 16,
+        "line": 13,
         "name": "Yo como usuario quiero eliminar mi cuenta",
         "steps": [
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 17,
+            "line": 14,
             "name": "Soy un usuario autenticado para eliminar mi cuenta",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:88"
             },
             "result": {
               "status": "passed",
-              "duration": 57229499
+              "duration": 123117900
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 18,
+            "line": 15,
             "name": "invoco el servicio de eliminación de mi cuenta",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:101"
             },
             "result": {
               "status": "passed",
-              "duration": 4700399
+              "duration": 40136600
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 19,
+            "line": 16,
             "name": "obtengo un código de estado 204 que me indica que fue exitosa",
             "match": {
               "location": "app\\step_definitions\\eliminar_usuario_steps.js:108"
             },
             "result": {
               "status": "passed",
-              "duration": 128899
+              "duration": 236900
             }
           }
         ],
@@ -515,7 +556,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 91599
+              "duration": 128700
             }
           },
           {
@@ -528,7 +569,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 5001499
+              "duration": 2199154799
             }
           },
           {
@@ -540,9 +581,8 @@
               "location": "app\\step_definitions\\forgot_password_steps.js:25"
             },
             "result": {
-              "status": "failed",
-              "duration": 566499,
-              "error_message": "AssertionError [ERR_ASSERTION]: Expected status code 200 but got 404\n    + expected - actual\n\n    -404\n    +200\n\n    at World.<anonymous> (C:\\microtaller\\microservices\\test\\app\\step_definitions\\forgot_password_steps.js:26:12)"
+              "status": "passed",
+              "duration": 15800999
             }
           },
           {
@@ -554,8 +594,8 @@
               "location": "app\\step_definitions\\forgot_password_steps.js:38"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 145900
             }
           }
         ],
@@ -579,7 +619,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 66100
+              "duration": 87899
             }
           },
           {
@@ -592,7 +632,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3673200
+              "duration": 18371199
             }
           },
           {
@@ -605,7 +645,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 10282700
+              "duration": 1629300
             }
           }
         ],
@@ -636,11 +676,11 @@
             "line": 4,
             "name": "soy un usuario registrado en el sistema",
             "match": {
-              "location": "app\\step_definitions\\login_steps.js:14"
+              "location": "app\\step_definitions\\login_steps.js:15"
             },
             "result": {
               "status": "passed",
-              "duration": 74100
+              "duration": 360899
             }
           },
           {
@@ -649,11 +689,11 @@
             "line": 5,
             "name": "realizo una solicitud POST a login",
             "match": {
-              "location": "app\\step_definitions\\login_steps.js:21"
+              "location": "app\\step_definitions\\login_steps.js:23"
             },
             "result": {
               "status": "passed",
-              "duration": 55691900
+              "duration": 112010399
             }
           },
           {
@@ -662,11 +702,11 @@
             "line": 6,
             "name": "obtengo un token de autenticación",
             "match": {
-              "location": "app\\step_definitions\\login_steps.js:28"
+              "location": "app\\step_definitions\\login_steps.js:30"
             },
             "result": {
               "status": "passed",
-              "duration": 9151899
+              "duration": 24173700
             }
           },
           {
@@ -675,11 +715,24 @@
             "line": 7,
             "name": "el código de estado debe ser 200",
             "match": {
-              "location": "app\\step_definitions\\login_steps.js:39"
+              "location": "app\\step_definitions\\login_steps.js:41"
             },
             "result": {
               "status": "passed",
-              "duration": 109799
+              "duration": 181100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "el servicio de logs debe contener un registro que indique un inicio de sesión exitoso",
+            "match": {
+              "location": "app\\step_definitions\\login_steps.js:45"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1019608599
             }
           }
         ],
@@ -690,46 +743,60 @@
         "description": "",
         "id": "la-api-debe-permitir-a-los-usuarios-registrados-iniciar-sesión;intentar-iniciar-sesión-con-credenciales-incorrectas",
         "keyword": "Scenario",
-        "line": 9,
+        "line": 10,
         "name": "Intentar iniciar sesión con credenciales incorrectas",
         "steps": [
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 10,
+            "line": 11,
             "name": "No soy un usuario registrado en el sistema",
             "match": {
-              "location": "app\\step_definitions\\login_steps.js:44"
+              "location": "app\\step_definitions\\login_steps.js:66"
             },
             "result": {
               "status": "passed",
-              "duration": 86899
+              "duration": 150300
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 11,
+            "line": 12,
             "name": "se envía la solicitud de login con credenciales incorrectas",
             "match": {
-              "location": "app\\step_definitions\\login_steps.js:51"
+              "location": "app\\step_definitions\\login_steps.js:74"
             },
             "result": {
               "status": "passed",
-              "duration": 5195500
+              "duration": 18214900
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 12,
+            "line": 13,
             "name": "obtengo un código de estado 401 indicando credenciales inválidas",
             "match": {
-              "location": "app\\step_definitions\\login_steps.js:58"
+              "location": "app\\step_definitions\\login_steps.js:81"
             },
             "result": {
               "status": "passed",
-              "duration": 1407200
+              "duration": 1590100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 14,
+            "name": "el servicio de logs debe contener un registro que indique un intento fallido de inicio de sesión debido a credenciales inválidas",
+            "match": {
+              "location": "app\\step_definitions\\login_steps.js:92"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 2028620800,
+              "error_message": "AssertionError [ERR_ASSERTION]: No se encontró ningún registro de log relacionado con el intento fallido de inicio de sesión del usuario: wronguser\n    at World.<anonymous> (C:\\Users\\jhona\\Desktop\\microservicios\\test\\app\\step_definitions\\login_steps.js:109:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
             }
           }
         ],
@@ -764,7 +831,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 57403099
+              "duration": 102533299
             }
           },
           {
@@ -777,7 +844,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3752599
+              "duration": 20243499
             }
           },
           {
@@ -790,7 +857,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 16908699
+              "duration": 27723000
             }
           },
           {
@@ -803,7 +870,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 75899
+              "duration": 258699
             }
           }
         ],
@@ -827,7 +894,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 56710199
+              "duration": 99143199
             }
           },
           {
@@ -840,20 +907,20 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3816000
+              "duration": 23533499
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
             "line": 13,
-            "name": "obtengo un código de estado 403 indicando que no tengo permiso para acceder a la información de otro usuario",
+            "name": "obtengo un código de estado 404 indicando que no tengo permiso para acceder a la información de otro usuario",
             "match": {
               "location": "app\\step_definitions\\obtener_usuario_steps.js:62"
             },
             "result": {
               "status": "passed",
-              "duration": 602400
+              "duration": 2123299
             }
           }
         ],
@@ -888,7 +955,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 55872699
+              "duration": 94722399
             }
           },
           {
@@ -901,7 +968,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3450800
+              "duration": 38247799
             }
           },
           {
@@ -914,7 +981,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 8517499
+              "duration": 19228499
             }
           },
           {
@@ -927,7 +994,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 71300
+              "duration": 263700
             }
           }
         ],
@@ -951,7 +1018,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 62400
+              "duration": 256599
             }
           },
           {
@@ -964,7 +1031,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3079499
+              "duration": 19886200
             }
           },
           {
@@ -977,7 +1044,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 100699
+              "duration": 243200
             }
           },
           {
@@ -990,7 +1057,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 731499
+              "duration": 1856099
             }
           }
         ],
