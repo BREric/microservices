@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"context"
@@ -80,14 +80,3 @@ func healthHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, healthStatus)
 }
 
-func main() {
-	router := gin.Default()
-
-	// Health check route
-	router.GET("/health", healthHandler)
-
-	// Add other routes here
-
-	// Start the server
-	router.Run(":8080")
-}

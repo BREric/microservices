@@ -55,6 +55,8 @@ func main() {
 		public.POST("/forgot_password", gin.WrapF(handlers.ForgotPassword))
 		public.POST("/reset_password", gin.WrapF(handlers.ResetPassword))
 		public.POST("/users", gin.WrapF(handlers.CreateUser))
+		// Health check route
+		public.GET("/health", healthHandler)
 	}
 
 	authenticated := router.Group("/")
